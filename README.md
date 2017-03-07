@@ -31,8 +31,7 @@ def pyeebls.eebls(times, mags, workarr_u, workarr_v,
 ```
 Calculates the BLS spectrum for the input times and mags arrays.
 
-Parameters
-----------
+### Parameters
 
 `times` : *ndarray* :
         A numpy array containing the times of the measurements.
@@ -66,8 +65,7 @@ Parameters
         a transit.
 
 
-Returns
--------
+### Returns
 
 A sequence of results:
 
@@ -100,8 +98,7 @@ A sequence of results:
         The phase bin index for the end of the transit.
 
 
-See Also
---------
+### See Also
 
 - the comments at the top of eebls.f in this package
 - the [astrobase.periodbase.kbls](https://github.com/waqasbhatti/astrobase/blob/master/astrobase/periodbase/kbls.py) module for a high-level interface to this module
