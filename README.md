@@ -34,34 +34,34 @@ Calculates the BLS spectrum for the input times and mags arrays.
 Parameters
 ----------
 
-`times` : ndarray
+`times` : *ndarray* :
         A numpy array containing the times of the measurements.
 
-`mags` : ndarray
+`mags` : *ndarray* :
         A numpy array containing the mags or fluxes to use as measurements.
 
-`workarr_u`, `workarr_v` : ndarray
+`workarr_u`, `workarr_v` : *ndarray* :
         Numpy arrays that must be the same size as times, used as temp
         workspaces by the Fortran function
 
-`nfreq` : int
+`nfreq` : *int* :
         The number of frequencies to search for the best period.
 
-`freqmin` : float
+`freqmin` : *float* :
         The minimum frequency to use.
 
-`stepsize` : float
+`stepsize` : *float* :
         The stepsize in frequency units to use while searching.
 
-`nbins` : int
+`nbins` : *int* :
         The number of bins to use when phasing up the light curve at a
         single test period.
 
-`minduration` : float
+`minduration` : *float* :
         The minimum transit duration in phase units to consider when testing for
         a transit.
 
-`maxduration` : float
+`maxduration` : *float* :
         The minimum transit duration in phase units to consider when testing for
         a transit.
 
@@ -76,27 +76,27 @@ A sequence of results:
  transduration, transingressbin, transegressbin)
 ```
 
-`power` : ndarray
+`power` : *ndarray* :
         A numpy array containing the values of the BLS spectrum at each tested
         frequency.
 
-`bestperiod` : float
+`bestperiod` : *float* :
         The period at the highest peak in the frequency spectrum.
 
-`bestpower` : float
+`bestpower` : *float* :
         The power at the highest peak in the frequency spectrum.
 
-`transdepth` : float
+`transdepth` : *float* :
         The depth of the transit at the best period.
 
-`transduration` : float
+`transduration` : *float* :
         The length of the transit as a fraction of the phase. This is the
         so-called 'q' parameter.
 
-`transingressbin` : int
+`transingressbin` : *int* :
         The phase bin index for the start of the transit.
 
-`transegressbin` : int
+`transegressbin` : *int* :
         The phase bin index for the end of the transit.
 
 
