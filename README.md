@@ -41,7 +41,7 @@ Calculates the BLS spectrum for the input times and mags arrays.
 
 `workarr_u`, `workarr_v` : *ndarray* :
         Numpy arrays that must be the same size as times, used as temp
-        workspaces by the Fortran function
+        workspaces by the Fortran function.
 
 `nfreq` : *int* :
         The number of frequencies to search for the best period.
