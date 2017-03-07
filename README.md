@@ -36,23 +36,31 @@ Parameters
 
 `times` : ndarray
         A numpy array containing the times of the measurements.
+
 `mags` : ndarray
         A numpy array containing the mags or fluxes to use as measurements.
+
 `workarr_u`, `workarr_v` : ndarray
         Numpy arrays that must be the same size as times, used as temp
         workspaces by the Fortran function
+
 `nfreq` : int
         The number of frequencies to search for the best period.
+
 `freqmin` : float
         The minimum frequency to use.
+
 `stepsize` : float
         The stepsize in frequency units to use while searching.
+
 `nbins` : int
         The number of bins to use when phasing up the light curve at a
         single test period.
+
 `minduration` : float
         The minimum transit duration in phase units to consider when testing for
         a transit.
+
 `maxduration` : float
         The minimum transit duration in phase units to consider when testing for
         a transit.
@@ -71,17 +79,23 @@ A sequence of results:
 `power` : ndarray
         A numpy array containing the values of the BLS spectrum at each tested
         frequency.
+
 `bestperiod` : float
         The period at the highest peak in the frequency spectrum.
+
 `bestpower` : float
         The power at the highest peak in the frequency spectrum.
+
 `transdepth` : float
         The depth of the transit at the best period.
+
 `transduration` : float
         The length of the transit as a fraction of the phase. This is the
         so-called 'q' parameter.
+
 `transingressbin` : int
         The phase bin index for the start of the transit.
+
 `transegressbin` : int
         The phase bin index for the end of the transit.
 
