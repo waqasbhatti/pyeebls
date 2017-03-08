@@ -37,3 +37,4 @@ __pycache__/
 *.so*
 _*.c
 .ipynb_checkpoints
+MANIFEST
