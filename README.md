@@ -25,21 +25,19 @@ module and broken out for easier use by other packages. This is used by the
 
 This package is available from PyPI: https://pypi.python.org/pypi/pyeebls
 
-You'll need numpy installed, along with a Fortran compiler.
+You'll need numpy installed, along with a Fortran compiler:
 
 ```bash
-## make sure numpy is installed first!                ##
-## this is required for the bls module installation   ##
-
-$ pip install numpy # in a virtualenv
+(venv)$ pip install numpy # in a virtualenv
 # or use dnf/yum/apt install numpy to install systemwide
 
-## you'll need a Fortran compiler for the bls module! ##
-## on Linux: dnf/yum/apt install gcc gcc-gfortran     ##
-## on OSX (using homebrew): brew install gcc          ##
+## you'll need a Fortran compiler to install pyeebls!         ##
+## on Linux: dnf/yum/apt install gcc gcc-gfortran             ##
+## on OSX (using homebrew): brew install gcc && brew link gcc ##
 ```
 
-Then, install it using pip (preferably in a virtualenv or use the --user flag):
+Then, install pyeebls using pip (preferably in a virtualenv or use the --user
+flag):
 
 ```bash
 (venv)$ pip install pyeebls
