@@ -21,6 +21,39 @@ module and broken out for easier use by other packages. This is used by the
 - Bhatti, W., et al. 2017
 - https://github.com/waqasbhatti/pyeebls
 
+### Installation
+
+This package is available from PyPI: https://pypi.python.org/pypi/pyeebls
+
+You'll need numpy installed, along with a Fortran compiler.
+
+```bash
+## make sure numpy is installed first!                ##
+## this is required for the bls module installation   ##
+
+$ pip install numpy # in a virtualenv
+# or use dnf/yum/apt install numpy to install systemwide
+
+## you'll need a Fortran compiler for the bls module! ##
+## on Linux: dnf/yum/apt install gcc gcc-gfortran     ##
+## on OSX (using homebrew): brew install gcc          ##
+```
+
+Then, install it using pip (preferably in a virtualenv or use the --user flag):
+
+```bash
+(venv)$ pip install pyeebls
+```
+
+Or download the tarball from PyPI, extract the files, and run setup.py:
+
+```bash
+(venv)$ python setup.py install
+```
+
+
+### Documentation
+
 There's only one function to use in this module.
 
 ```python
