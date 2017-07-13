@@ -78,8 +78,8 @@ c
       real*8, intent(out) :: bper, bpow, depth, qtran
       integer, intent(out) :: in1, in2
 
-      real*8, dimension(2000) :: y
-      integer, dimension(2000) :: ibi
+      real*8, dimension(30000) :: y
+      integer, dimension(30000) :: ibi
       integer :: minbin,nbmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
      &nb2,jn1,jn2
       real*8 :: rn,tot,s,t1,f0,p0,ph,power,rn1,pow,rn3,s3
