@@ -86,7 +86,7 @@ c
 
 c
       minbin = 5
-      nbmax  = 2000
+      nbmax  = 30000
       if(nb.gt.nbmax) write(*,*) ' NB > NBMAX !!'
       if(nb.gt.nbmax) stop
       tot=t(n)-t(1)
