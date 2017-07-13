@@ -6,7 +6,7 @@ Stolen from http://python-packaging.readthedocs.io/en/latest/everything.html and
 modified by me.
 
 '''
-__version__ = '0.1.1'
+__version__ = '0.1.4'
 
 import sys, os.path
 
@@ -22,7 +22,7 @@ except:
 
 
 def readme():
-    with open('README.md') as f:
+    with open('README.rst') as f:
         return f.read()
 
 INSTALL_REQUIRES = [
@@ -33,7 +33,7 @@ INSTALL_REQUIRES = [
 ## DO THE FORTRAN BIT ##
 ########################
 
-# taken from github:dfm/python-bls.git/setup.py
+# adapted from github:dfm/python-bls.git/setup.py
 
 # Define the Fortran extension.
 pyeebls = Extension("pyeebls._pyeebls",
