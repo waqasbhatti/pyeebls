@@ -8,6 +8,7 @@ modified by me.
 '''
 __version__ = '0.1.6'
 
+import setuptools
 import sys, os.path
 
 # for f2py extension building
