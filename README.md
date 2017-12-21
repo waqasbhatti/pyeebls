@@ -24,9 +24,8 @@ module and broken out for easier use by other packages. This is used by the
 ### Installation
 
 This package is available from PyPI: https://pypi.python.org/pypi/pyeebls. If
-you're using Python 2.7, 3.4--3.6 on 64-bit Linux, or Mac OSX >= 10.7, you
-should be able to install the binary wheels from PyPI so no Fortran compiler is
-needed:
+you're using Python 2.7, 3.4--3.6 on 64-bit Linux, you should be able to install
+the binary wheels from PyPI so no Fortran compiler is needed:
 
 ```bash
 (venv)$ pip install pyeebls
