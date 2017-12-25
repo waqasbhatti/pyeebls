@@ -1,8 +1,8 @@
 environment:
 
   global:
-    - MINGW: C:\tools\mingw64\bin\
-    - PATH: C:\tools\mingw64\bin;$(PATH)
+      MINGW: C:\tools\mingw64\bin\
+      PATH: C:\tools\mingw64\bin;$(PATH)
 
   matrix:
 
