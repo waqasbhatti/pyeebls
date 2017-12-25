@@ -38,7 +38,8 @@ INSTALL_REQUIRES = [
 
 # Define the Fortran extension.
 pyeebls = Extension("pyeebls._pyeebls",
-                    ["pyeebls/pyeebls.pyf", "pyeebls/eebls.f"])
+                    ["pyeebls/pyeebls.pyf", "pyeebls/eebls.f"],
+                    extra_link_args=['-static'])
 
 setup(
     name='pyeebls',
