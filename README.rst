@@ -29,13 +29,14 @@ Installation
 ------------
 
 This package is available from PyPI: https://pypi.python.org/pypi/pyeebls. If
-you're using Python 2.7, 3.4--3.6 on 64-bit Linux, you should be able to install
-the binary wheels from PyPI so no Fortran compiler is needed: ::
+you're using Python 2.7, 3.4--3.6 on 64-bit Linux or Python 2.7/3.6 on 64-bit
+Windows, you should be able to install the binary wheels from PyPI so no Fortran
+compiler is needed: ::
 
   (venv)$ pip install pyeebls
 
-If this is not the case, you'll need to have numpy installed, along with a
-Fortran compiler: ::
+If this is not the case (Mac OSX; wheels will be built as soon as I figure out
+how), you'll need to have numpy installed, along with a Fortran compiler: ::
 
   (venv)$ pip install numpy # in a virtualenv
   # or use dnf/yum/apt install numpy to install systemwide
