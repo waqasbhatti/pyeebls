@@ -1,5 +1,9 @@
 environment:
 
+  global:
+    - MINGW: C:\tools\mingw64\bin\
+    - PATH: C:\tools\mingw64\bin;$(PATH)
+
   matrix:
 
     # For Python versions available on Appveyor, see
