@@ -22,8 +22,7 @@ install:
   - "%PYTHON%\\python.exe -m pip install pip -U"
   - "%PYTHON%\\python.exe -m pip install wheel numpy"
 
-build:
-  - "%PYTHON%\\python.exe setup.py build_ext --compiler mingw32 --fcompiler gfortran "
+build: off
 
 test_script:
   # Put your test command here.
@@ -40,6 +39,7 @@ after_test:
   # Again, you only need build.cmd if you're building C extensions for
   # 64-bit Python 3.3/3.4. And you need to use %PYTHON% to get the correct
   # interpreter
+  - "%PYTHON%\\python.exe setup.py build_ext --compiler mingw32 --fcompiler gfortran "
   - "%PYTHON%\\python.exe -m pip wheel . -w windist"
 
 artifacts:
