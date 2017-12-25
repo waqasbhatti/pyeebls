@@ -13,7 +13,6 @@ environment:
     # isn't covered by this document) at the time of writing.
 
     - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python35-x64"
     - PYTHON: "C:\\Python36-x64"
 
 install:
@@ -40,7 +39,7 @@ after_test:
   # Again, you only need build.cmd if you're building C extensions for
   # 64-bit Python 3.3/3.4. And you need to use %PYTHON% to get the correct
   # interpreter
-  - "%PYTHON%\\python.exe setup.py build_ext --compiler=mingw64 --fcompiler=gfortran "
+  - "%PYTHON%\\python.exe setup.py build_ext --compiler mingw64 --fcompiler gfortran "
   - "%PYTHON%\\python.exe -m pip wheel ."
 
 artifacts:
