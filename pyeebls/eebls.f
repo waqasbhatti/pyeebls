@@ -113,12 +113,18 @@ c     Set temporal time series
 c=================================
 c
       s=0.0d0
+c     t1 is the first elem in time array used as arbitrary epoch
       t1=t(1)
+c     these two loops below renormalize the magseries to 0.0
+c     by calculating the average of the magseries
+c     also rescales the times to the tprime = time - t1
       do 103 i=1,n
          u(i)=t(i)-t1
          s=s+x(i)
  103  continue
+c
       s=s/rn
+c
       do 109 i=1,n
          v(i)=x(i)-s
  109  continue
@@ -128,6 +134,7 @@ c     Start period search     *
 c******************************
 c
       do 100 jf=1,nf
+c
          f0=fmin+df*dfloat(jf-1)
          p0=1.0d0/f0
 c
@@ -141,8 +148,10 @@ c
  101     continue
 c
          do 102 i=1,n
+c     phase = (time-t1)/period - floor((time-t1)/period)
             ph     = u(i)*f0
             ph     = ph-idint(ph)
+c
             j      = 1 + idint(nb*ph)
             ibi(j) = ibi(j) + 1
             y(j) =   y(j) + v(i)
