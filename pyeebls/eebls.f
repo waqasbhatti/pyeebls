@@ -91,6 +91,8 @@ c
       nbinsmax  = 30000
       if(nbins.gt.nbinsmax) write(*,*) ' NBINS > NBINSMAX !!'
       if(nbins.gt.nbinsmax) stop
+c
+c     check if the time-series length is larger than the minimum test freq
       tot=t(n)-t(1)
       if(fmin.lt.1.0d0/tot) write(*,*) ' fmin < 1/T !!'
       if(fmin.lt.1.0d0/tot) stop
