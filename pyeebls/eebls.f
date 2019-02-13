@@ -1,6 +1,6 @@
 c
 c
-      subroutine eebls(n,t,x,u,v,nf,fmin,df,nbins,qmin,qmax,
+      subroutine eebls(n,t,x,u,v,nfreqs,fmin,df,nbins,qmin,qmax,
      &     p,bper,bpow,depth,qtran,in1,in2)
 c
 c------------------------------------------------------------------------
@@ -30,7 +30,7 @@ c     x    = array {x(i)}, containing the data values of the time series
 c     u    = temporal/work/dummy array, must be dimensioned in the
 c     calling program in the same way as  {t(i)}
 c     v    = the same as  {u(i)}
-c     nf   = number of frequency points in which the spectrum is computed
+c     nfreqs   = number of frequency points in which the spectrum is computed
 c     fmin = minimum frequency (MUST be > 0)
 c     df   = frequency step
 c     nbins   = number of bins in the folded time series at any test period
@@ -59,9 +59,9 @@ c     -- *nbins*   MUST be lower than  *nbinsmax*
 c     -- Dimensions of arrays {y(i)} and {ibi(i)} MUST be greater than
 c     or equal to  *nbinsmax*.
 c     -- The lowest number of points allowed in a single bin is equal
-c     to   MAX(minbin,qmin*N),  where   *qmin*  is the minimum transit
+c     to   MAX(minbinpts,qmin*N),  where   *qmin*  is the minimum transit
 c     length/trial period,   *N*  is the total number of data points,
-c     *minbin*  is the preset minimum number of the data points per
+c     *minbinpts*  is the preset minimum number of the data points per
 c     bin.
 c
 c========================================================================
@@ -69,26 +69,26 @@ c
       implicit none
 c
 
-      integer, intent(in) :: n, nf, nbins
+      integer, intent(in) :: n, nfreqs, nbins
       real*8, dimension(n), intent(in) :: t, x
       real*8, dimension(n), intent(inout) :: u, v
       real*8, intent(in) :: fmin, df, qmin, qmax
 
-      real*8, dimension(nf), intent(out) :: p
+      real*8, dimension(nfreqs), intent(out) :: p
       real*8, intent(out) :: bper, bpow, depth, qtran
       integer, intent(out) :: in1, in2
 
 c     these two arrays hold the binned timeseries
-      real*8, dimension(30000) :: y
-      integer, dimension(30000) :: ibi
+      real*8, dimension(3000) :: y
+      integer, dimension(3000) :: ibi
 c
-      integer :: minbin,nbinsmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
+      integer :: minbinpts,nbinsmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
      &     nb2,jn1,jn2
       real*8 :: rn,tot,s,t1,f0,p0,ph,power,rn1,pow,rn3,s3
 
 c
-      minbin = 5
-      nbinsmax  = 30000
+      minbinpts = 5
+      nbinsmax  = 3000
       if(nbins.gt.nbinsmax) write(*,*) ' NBINS > NBINSMAX !!'
       if(nbins.gt.nbinsmax) stop
 c
@@ -103,7 +103,7 @@ c
       if(kmi.lt.1) kmi=1
       kma=idint(qmax*dfloat(nbins))+1
       kkmi=idint(rn*qmin)
-      if(kkmi.lt.minbin) kkmi=minbin
+      if(kkmi.lt.minbinpts) kkmi=minbinpts
       bpow=0.0d0
 c
 c     The following variables are defined for the extension
@@ -137,7 +137,7 @@ c******************************
 c     Start period search     *
 c******************************
 c
-      do 100 jf=1,nf
+      do 100 jf=1,nfreqs
 c
          f0=fmin+df*dfloat(jf-1)
          p0=1.0d0/f0
