@@ -99,7 +99,7 @@ c
       if(nbins.gt.nbinsmax) write(*,*) ' NBINS > NBINSMAX !!'
       if(nbins.gt.nbinsmax) stop
 c
-c     check if the time-series length is larger than the minimum test freq
+c     Check if the time-series length is larger than the minimum test freq
       tot=t(n)-t(1)
       if(fmin.lt.1.0d0/tot) write(*,*) ' fmin < 1/T !!'
       if(fmin.lt.1.0d0/tot) stop
@@ -126,9 +126,9 @@ c
       s=0.0d0
 c     t1 is the first elem in time array used as arbitrary epoch
       t1=t(1)
-c     these two loops below renormalize the magseries to 0.0
+c     These two loops below renormalize the magseries to 0.0
 c     by calculating the average of the magseries
-c     also rescales the times to the tprime = time - t1
+c     Also rescales the times to the tprime = time - t1
       do 103 i=1,n
          u(i)=t(i)-t1
          s=s+x(i)
@@ -163,7 +163,7 @@ c     phase = (time-t1)/period - floor((time-t1)/period)
             ph     = u(i)*f0
             ph     = ph-idint(ph)
 c
-c     I think this is binning things in phasebins
+c     This is binning things in phasebins
             j      = 1 + idint(nbins*ph)
             ibi(j) = ibi(j) + 1
             y(j) =   y(j) + v(i)
@@ -187,11 +187,14 @@ c
          power=0.0d0
 c
          do 1 i=1,nbins
+c
             s     = 0.0d0
             k     = 0
             kk    = 0
             nb2   = i+kma
+c
             do 2 j=i,nb2
+c
                k     = k+1
                kk    = kk+ibi(j)
                s     = s+y(j)
@@ -205,7 +208,9 @@ c
                jn2   = j
                rn3   = rn1
                s3    = s
+c
  2          continue
+c
  1       continue
 c
          power = dsqrt(power)
