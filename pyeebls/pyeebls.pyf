@@ -3,19 +3,19 @@
 
 python module _pyeebls ! in
     interface  ! in :_pyeebls
-        subroutine eebls(n,t,x,u,v,nf,fmin,df,nb,qmi,qma,p,bper,bpow,depth,qtran,in1,in2) ! in :_pyeebls:eebls.f
+        subroutine eebls(n,t,x,u,v,nfreqs,fmin,df,nbins,qmin,qmax,p,bper,bpow,depth,qtran,in1,in2) ! in :_pyeebls:eebls.f
             integer, optional,intent(in),check(len(t)>=n),depend(t) :: n=len(t)
             real*8 dimension(n),intent(in) :: t
             real*8 dimension(n),intent(in),depend(n) :: x
             real*8 dimension(n),intent(inout),depend(n) :: u
             real*8 dimension(n),intent(inout),depend(n) :: v
-            integer intent(in) :: nf
+            integer intent(in) :: nfreqs
             real*8 intent(in) :: fmin
             real*8 intent(in) :: df
-            integer intent(in) :: nb
-            real*8 intent(in) :: qmi
-            real*8 intent(in) :: qma
-            real*8 dimension(nf),intent(out),depend(nf) :: p
+            integer intent(in) :: nbins
+            real*8 intent(in) :: qmin
+            real*8 intent(in) :: qmax
+            real*8 dimension(nfreqs),intent(out),depend(nfreqs) :: p
             real*8 intent(out) :: bper
             real*8 intent(out) :: bpow
             real*8 intent(out) :: depth

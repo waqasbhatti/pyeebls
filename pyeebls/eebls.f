@@ -19,6 +19,13 @@ c     yields lower detection efficiency because of the lower number of
 c     data points in the bin(s) covering the low state.
 c
 c     For further comments/tests see  www.konkoly.hu/staff/kovacs.html
+c
+c     To generate the corresponding pyf interface file using f2py:
+c
+c     f2py -h pyeebls.pyf eebls.f --overwrite-signature -m _pyeebls
+c
+c     Make sure to add `!f2py threadsafe` right before `end subroutine eebls`
+c     in the generated pyf file.
 c------------------------------------------------------------------------
 c
 c     Input parameters:
@@ -82,8 +89,8 @@ c     these two arrays hold the binned timeseries
       real*8, dimension(3000) :: y
       integer, dimension(3000) :: ibi
 c
-      integer :: minbinpts,nbinsmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
-     &     nb2,jn1,jn2
+      integer :: minbinpts,nbinsmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,
+     &     k,kk,nb2,jn1,jn2
       real*8 :: rn,tot,s,t1,f0,p0,ph,power,rn1,pow,rn3,s3
 
 c
