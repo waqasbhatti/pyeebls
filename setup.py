@@ -9,12 +9,12 @@ modified by me.
 __version__ = '0.1.6'
 
 import setuptools
-import sys, os.path
+import sys
 
 # for f2py extension building
 try:
     from numpy.distutils.core import Extension, setup
-except:
+except Exception as e:
     raise ImportError(
         '\nYou need to have numpy installed before running setup.py,\n'
         'because we need its Extension functionality to make a\n'
@@ -37,9 +37,17 @@ INSTALL_REQUIRES = [
 # adapted from github:dfm/python-bls.git/setup.py
 
 # Define the Fortran extension.
-pyeebls = Extension("pyeebls._pyeebls",
-                    ["pyeebls/pyeebls.pyf", "pyeebls/eebls.f"],
-                    extra_link_args=['-static'])
+
+if sys.platform != 'linux':
+    pyeebls = Extension("pyeebls._pyeebls",
+                        ["pyeebls/pyeebls.pyf", "pyeebls/eebls.f"],
+                        extra_link_args=['-static'])
+
+# static linking fails on most newer Linuxes because of PIE-enabled default
+# compiler flags
+else:
+    pyeebls = Extension("pyeebls._pyeebls",
+                        ["pyeebls/pyeebls.pyf", "pyeebls/eebls.f"])
 
 setup(
     name='pyeebls',
