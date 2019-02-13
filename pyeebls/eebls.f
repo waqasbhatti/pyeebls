@@ -1,6 +1,6 @@
 c
 c
-      subroutine eebls(n,t,x,u,v,nf,fmin,df,nb,qmi,qma,
+      subroutine eebls(n,t,x,u,v,nf,fmin,df,nbins,qmin,qmax,
      &     p,bper,bpow,depth,qtran,in1,in2)
 c
 c------------------------------------------------------------------------
@@ -33,9 +33,9 @@ c     v    = the same as  {u(i)}
 c     nf   = number of frequency points in which the spectrum is computed
 c     fmin = minimum frequency (MUST be > 0)
 c     df   = frequency step
-c     nb   = number of bins in the folded time series at any test period
-c     qmi  = minimum fractional transit length to be tested
-c     qma  = maximum fractional transit length to be tested
+c     nbins   = number of bins in the folded time series at any test period
+c     qmin  = minimum fractional transit length to be tested
+c     qmax  = maximum fractional transit length to be tested
 c
 c     Output parameters:
 c     ~~~~~~~~~~~~~~~~~~
@@ -47,19 +47,19 @@ c     bper = period at the highest peak in the frequency spectrum
 c     bpow = value of {p(i)} at the highest peak
 c     depth= depth of the transit at   *bper*
 c     qtran= fractional transit length  [ T_transit/bper ]
-c     in1  = bin index at the start of the transit [ 0 < in1 < nb+1 ]
-c     in2  = bin index at the end   of the transit [ 0 < in2 < nb+1 ]
+c     in1  = bin index at the start of the transit [ 0 < in1 < nbins+1 ]
+c     in2  = bin index at the end   of the transit [ 0 < in2 < nbins+1 ]
 c
 c
 c     Remarks:
 c     ~~~~~~~~
 c
 c     -- *fmin* MUST be greater than  *1/total time span*
-c     -- *nb*   MUST be lower than  *nbmax*
+c     -- *nbins*   MUST be lower than  *nbinsmax*
 c     -- Dimensions of arrays {y(i)} and {ibi(i)} MUST be greater than
-c     or equal to  *nbmax*.
+c     or equal to  *nbinsmax*.
 c     -- The lowest number of points allowed in a single bin is equal
-c     to   MAX(minbin,qmi*N),  where   *qmi*  is the minimum transit
+c     to   MAX(minbin,qmin*N),  where   *qmin*  is the minimum transit
 c     length/trial period,   *N*  is the total number of data points,
 c     *minbin*  is the preset minimum number of the data points per
 c     bin.
@@ -69,44 +69,46 @@ c
       implicit none
 c
 
-      integer, intent(in) :: n, nf, nb
+      integer, intent(in) :: n, nf, nbins
       real*8, dimension(n), intent(in) :: t, x
       real*8, dimension(n), intent(inout) :: u, v
-      real*8, intent(in) :: fmin, df, qmi, qma
+      real*8, intent(in) :: fmin, df, qmin, qmax
 
       real*8, dimension(nf), intent(out) :: p
       real*8, intent(out) :: bper, bpow, depth, qtran
       integer, intent(out) :: in1, in2
 
+c     these two arrays hold the binned timeseries
       real*8, dimension(30000) :: y
       integer, dimension(30000) :: ibi
-      integer :: minbin,nbmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
+c
+      integer :: minbin,nbinsmax,kmi,kma,kkmi,nb1,nbkma,i,jf,j,jnb,k,kk,
      &     nb2,jn1,jn2
       real*8 :: rn,tot,s,t1,f0,p0,ph,power,rn1,pow,rn3,s3
 
 c
       minbin = 5
-      nbmax  = 30000
-      if(nb.gt.nbmax) write(*,*) ' NB > NBMAX !!'
-      if(nb.gt.nbmax) stop
+      nbinsmax  = 30000
+      if(nbins.gt.nbinsmax) write(*,*) ' NBINS > NBINSMAX !!'
+      if(nbins.gt.nbinsmax) stop
       tot=t(n)-t(1)
       if(fmin.lt.1.0d0/tot) write(*,*) ' fmin < 1/T !!'
       if(fmin.lt.1.0d0/tot) stop
 c------------------------------------------------------------------------
 c
       rn=dfloat(n)
-      kmi=idint(qmi*dfloat(nb))
+      kmi=idint(qmin*dfloat(nbins))
       if(kmi.lt.1) kmi=1
-      kma=idint(qma*dfloat(nb))+1
-      kkmi=idint(rn*qmi)
+      kma=idint(qmax*dfloat(nbins))+1
+      kkmi=idint(rn*qmin)
       if(kkmi.lt.minbin) kkmi=minbin
       bpow=0.0d0
 c
 c     The following variables are defined for the extension
 c     of arrays  ibi()  and  y()  [ see below ]
 c
-      nb1   = nb+1
-      nbkma = nb+kma
+      nb1   = nbins+1
+      nbkma = nbins+kma
 c
 c=================================
 c     Set temporal time series
@@ -141,8 +143,8 @@ c
 c======================================================
 c     Compute folded time series with  *p0*  period
 c======================================================
-c
-         do 101 j=1,nb
+c     This clears out the binned timeseries arrays
+         do 101 j=1,nbins
             y(j) = 0.0d0
             ibi(j) = 0
  101     continue
@@ -152,17 +154,18 @@ c     phase = (time-t1)/period - floor((time-t1)/period)
             ph     = u(i)*f0
             ph     = ph-idint(ph)
 c
-            j      = 1 + idint(nb*ph)
+c     I think this is binning things in phasebins
+            j      = 1 + idint(nbins*ph)
             ibi(j) = ibi(j) + 1
             y(j) =   y(j) + v(i)
  102     continue
 c
 c-----------------------------------------------
 c     Extend the arrays  ibi()  and  y() beyond
-c     nb   by  wrapping
+c     nbins   by  wrapping
 c
          do 104 j=nb1,nbkma
-            jnb    = j-nb
+            jnb    = j-nbins
             ibi(j) = ibi(jnb)
             y(j) =   y(jnb)
  104     continue
@@ -174,7 +177,7 @@ c===============================================
 c
          power=0.0d0
 c
-         do 1 i=1,nb
+         do 1 i=1,nbins
             s     = 0.0d0
             k     = 0
             kk    = 0
@@ -211,7 +214,7 @@ c
 c
 c     Edge correction of transit end index
 c
-      if(in2.gt.nb) in2 = in2-nb
+      if(in2.gt.nbins) in2 = in2-nbins
 c
       return
       end
