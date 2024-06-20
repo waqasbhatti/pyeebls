@@ -1,0 +1,38 @@
+[build-system]
+requires = ["scikit-build-core", "numpy"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pyeebls"
+version = "0.2.0"
+description = "Python f2py extension wrapping eebls.f by Kovacs et al. 2002."
+readme = "README.md"
+classifiers = [
+    "Development Status :: 5 - Stable",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+]
+license.file = "LICENSE"
+authors = [
+    { name = "Waqas Bhatti", email = "waqas.afzal.bhatti@gmail.com" }
+]
+
+requires-python = ">=3.8"
+dependencies = [
+    "numpy<2",
+]
+
+[project.urls]
+Homepage = "https://github.com/waqasbhatti/pyeebls"
+Documentation = "https://github.com/waqasbhatti/pyeebls"
+"Bug Tracker" = "https://github.com/waqasbhatti/pyeebls/issues"
+
+[tool.scikit-build]
+ninja.minimum-version = "1.10"
+cmake.minimum-version = "3.17.2"
+
+[tool.cibuildwheel]
+skip = "cp36* cp37* pp* *cp38-musllinux* *cp39-musllinux*"
+archs = "auto64"
