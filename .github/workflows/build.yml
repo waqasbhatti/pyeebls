@@ -60,7 +60,6 @@ jobs:
                 path-type: inherit
                 install: |
                   mingw-w64-x86_64-gcc-fortran
-                  mingw-w64-x86_64-cmake
 
             - name: Build wheels with cibuildwheel on Linux
               if: matrix.os == 'ubuntu-latest'
