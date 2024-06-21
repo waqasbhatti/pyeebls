@@ -69,6 +69,8 @@ jobs:
               if: matrix.os == 'windows-latest'
               shell: msys2 {0}
               run: pipx run cibuildwheel
+              env:
+                CIBW_ENVIRONMENT_WINDOWS: CC=gcc CXX=g++ FC=gfortran
 
             - name: Build wheels with cibuildwheel on MacOS 13
               if: matrix.os == 'macos-13'
