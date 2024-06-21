@@ -57,9 +57,10 @@ jobs:
               if: runner.os == 'Windows'
               uses: msys2/setup-msys2@v2
               with:
-                path-type: inherit
+                # path-type: inherit
                 install: |
                   mingw-w64-x86_64-gcc-fortran
+                  mingw-w64-x86_64-cmake
 
             - name: Build wheels with cibuildwheel on Linux
               if: matrix.os == 'ubuntu-latest'
@@ -70,7 +71,7 @@ jobs:
               shell: msys2 {0}
               run: pipx run cibuildwheel
               env:
-                CIBW_ENVIRONMENT_WINDOWS: CC=gcc CXX=g++ FC=gfortran
+                CIBW_ENVIRONMENT_WINDOWS: CC=gcc CXX=g++ FC=gfortran CMAKE_ARGS='-G "MSYS Makefiles"'
 
             - name: Build wheels with cibuildwheel on MacOS 13
               if: matrix.os == 'macos-13'

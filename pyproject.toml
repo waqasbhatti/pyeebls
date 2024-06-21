@@ -37,7 +37,6 @@ Documentation = "https://github.com/waqasbhatti/pyeebls"
 [tool.scikit-build]
 ninja.version = ">=1.10"
 cmake.version = ">=3.17.2"
-cmake.args = ["-G 'MSYS Makefiles'"]
 
 [tool.cibuildwheel]
 build-verbosity = "3"
