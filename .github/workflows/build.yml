@@ -62,7 +62,7 @@ jobs:
                   mingw-w64-x86_64-gcc-fortran
 
             - name: Build wheels with cibuildwheel on Linux
-              if: matrix.os == 'ubuntu-linux'
+              if: matrix.os == 'ubuntu-latest'
               run: pipx run cibuildwheel
 
             - name: Build wheels with cibuildwheel on Windows
