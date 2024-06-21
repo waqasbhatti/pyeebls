@@ -41,9 +41,8 @@ jobs:
                 fetch-depth: 0
                 submodules: true
 
-            - uses: pypa/cibuildwheel@v2.19.1
-              with:
-                config-file: "./pyproject.toml"
+            - name: Build wheels with cibuildwheel
+              run: pipx run cibuildwheel
 
             - uses: actions/upload-artifact@v4
               with:
