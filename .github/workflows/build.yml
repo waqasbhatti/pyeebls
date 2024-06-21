@@ -16,8 +16,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
               with:
-                fetch-depth: 0 # Optional, use if you use setuptools_scm
-                submodules: true # Optional, use if you have submodules
+                fetch-depth: 0
+                submodules: true
 
             - name: Build sdist
               run: pipx run build --sdist
@@ -40,6 +40,22 @@ jobs:
               with:
                 fetch-depth: 0
                 submodules: true
+
+            - name: Provide gfortran (macOS)
+              if: runner.os == 'macOS'
+              run: |
+                ARCH=$(uname -m)
+                if [ "$ARCH" == "arm64" ]; then
+                    sudo ln -fs /opt/homebrew/bin/gfortran-12 /opt/homebrew/bin/gfortran
+                else
+                    sudo ln -fs /usr/local/bin/gfortran-12 /usr/local/bin/gfortran
+                fi
+
+                gfortran --version
+
+            - name: Provide gfortran (Windows)
+              if: runner.os == 'Windows'
+              uses: msys2/setup-msys2@v2
 
             - name: Build wheels with cibuildwheel
               run: pipx run cibuildwheel
