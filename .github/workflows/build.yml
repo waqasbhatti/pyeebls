@@ -56,9 +56,30 @@ jobs:
             - name: Provide gfortran (Windows)
               if: runner.os == 'Windows'
               uses: msys2/setup-msys2@v2
+              with:
+                path-type: inherit
+                install: |
+                  mingw-w64-x86_64-gcc-fortran
 
-            - name: Build wheels with cibuildwheel
+            - name: Build wheels with cibuildwheel on Linux
+              if: matrix.os == 'ubuntu-linux'
               run: pipx run cibuildwheel
+
+            - name: Build wheels with cibuildwheel on Windows
+              if: matrix.os == 'windows-latest'
+              run: pipx run cibuildwheel
+
+            - name: Build wheels with cibuildwheel on MacOS 13
+              if: matrix.os == 'macos-13'
+              run: pipx run cibuildwheel
+              env:
+                CIBW_REPAIR_WHEEL_COMMAND: "delocate-wheel --require-archs {delocate_archs} --require-target-macos-version 13.0 -w {dest_dir} -v {wheel} "
+
+            - name: Build wheels with cibuildwheel on MacOS 13
+              if: matrix.os == 'macos-14'
+              run: pipx run cibuildwheel
+              env:
+                CIBW_REPAIR_WHEEL_COMMAND: "delocate-wheel --require-archs {delocate_archs} --require-target-macos-version 14.0 -w {dest_dir} -v {wheel} "
 
             - uses: actions/upload-artifact@v4
               with:
