@@ -13,9 +13,9 @@ execute_process(
   OUTPUT_VARIABLE F2PY_INCLUDE_DIR
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-file(TO_CMAKE_PATH "${F2PY_INCLUDE_DIR}/fortranobject.c" F2PY_INCLUDE_DIRX)
+file(TO_CMAKE_PATH "${F2PY_INCLUDE_DIR}" F2PY_INCLUDE_DIRX)
 
-add_library(fortranobject OBJECT "${F2PY_INCLUDE_DIRX}")
+add_library(fortranobject OBJECT "${F2PY_INCLUDE_DIRX}/fortranobject.c")
 target_link_libraries(fortranobject PUBLIC Python::NumPy)
 target_include_directories(fortranobject PUBLIC "${F2PY_INCLUDE_DIRX}")
 set_property(TARGET fortranobject PROPERTY POSITION_INDEPENDENT_CODE ON)
