@@ -39,3 +39,4 @@ _*.c
 .ipynb_checkpoints
 MANIFEST
 wheelhouse
+venv
