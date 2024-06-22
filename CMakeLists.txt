@@ -13,22 +13,30 @@ execute_process(
   OUTPUT_VARIABLE F2PY_INCLUDE_DIR
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-add_library(fortranobject OBJECT "${F2PY_INCLUDE_DIR}/fortranobject.c")
+file(TO_CMAKE_PATH "${F2PY_INCLUDE_DIR}/fortranobject.c" F2PY_INCLUDE_DIRX)
+
+add_library(fortranobject OBJECT "${F2PY_INCLUDE_DIRX}")
 target_link_libraries(fortranobject PUBLIC Python::NumPy)
-target_include_directories(fortranobject PUBLIC "${F2PY_INCLUDE_DIR}")
+target_include_directories(fortranobject PUBLIC "${F2PY_INCLUDE_DIRX}")
 set_property(TARGET fortranobject PROPERTY POSITION_INDEPENDENT_CODE ON)
 
+file(TO_CMAKE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/eebls.f" EEBLS_F_FILE)
+file(TO_CMAKE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/pyeebls.pyf" PYEEBLS_PYF_FILE)
+
+file(TO_CMAKE_PATH "${CMAKE_CURRENT_BINARY_DIR}/_pyeebls-f2pywrappers.f" F2PYWRAPPERS_FILE)
+file(TO_CMAKE_PATH "${CMAKE_CURRENT_BINARY_DIR}/_pyeeblsmodule.c" PYEEBLSMODULE_FILE)
+
 add_custom_command(
-  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/_pyeeblsmodule.c" "${CMAKE_CURRENT_BINARY_DIR}/_pyeebls-f2pywrappers.f"
-  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/eebls.f" "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/pyeebls.pyf"
+  OUTPUT "${PYEEBLSMODULE_FILE}" "${F2PYWRAPPERS_FILE}"
+  DEPENDS "${EEBLS_F_FILE}" "${PYEEBLS_PYF_FILE}"
   VERBATIM
   COMMAND "${Python_EXECUTABLE}" -m numpy.f2py
-          "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/eebls.f" "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/pyeebls.pyf"  -m _pyeebls)
+          "${EEBLS_F_FILE}" "${PYEEBLS_PYF_FILE}" -m _pyeebls)
 
 python_add_library(
-  _pyeebls MODULE "${CMAKE_CURRENT_BINARY_DIR}/_pyeeblsmodule.c"
-  "${CMAKE_CURRENT_BINARY_DIR}/_pyeebls-f2pywrappers.f"
-  "${CMAKE_CURRENT_SOURCE_DIR}/pyeebls/eebls.f" WITH_SOABI)
+  _pyeebls MODULE "${PYEEBLSMODULE_FILE}"
+  "${F2PYWRAPPERS_FILE}"
+  "${EEBLS_F_FILE}" WITH_SOABI)
 target_link_libraries(_pyeebls PRIVATE fortranobject)
 
 install(TARGETS _pyeebls DESTINATION ./pyeebls/)
